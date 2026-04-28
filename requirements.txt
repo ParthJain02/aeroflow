@@ -9,3 +9,4 @@ google-auth
 python-dotenv
 requests
 gunicorn
+psycopg2-binary
