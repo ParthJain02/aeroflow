@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block title %}Edit Flight | Admin{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-4">
+    <div class="col-md-8">
+        <div class="d-flex align-items-center mb-4">
+            <a href="{{ url_for('admin.manage_flights') }}" class="btn btn-neo me-3"><i class="bi bi-arrow-left"></i> Back</a>
+            <h2 class="fw-bold mb-0">Edit Flight #{{ flight.id }}</h2>
+        </div>
+
+        <div class="container-neo">
+            <form method="POST" action="{{ url_for('admin.edit_flight', flight_id=flight.id) }}">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label ms-1 fw-medium">Source</label>
+                        <input type="text" class="form-control form-control-neo" name="source" value="{{ flight.source }}" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label ms-1 fw-medium">Destination</label>
+                        <input type="text" class="form-control form-control-neo" name="destination" value="{{ flight.destination }}" required>
+                    </div>
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label ms-1 fw-medium">Date</label>
+                        <input type="date" class="form-control form-control-neo" name="date" value="{{ flight.date.strftime('%Y-%m-%d') }}" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label ms-1 fw-medium">Time</label>
+                        <input type="time" class="form-control form-control-neo" name="time" value="{{ flight.time.strftime('%H:%M:%S') }}" required>
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label class="form-label ms-1 fw-medium">Total Seats</label>
+                        <input type="number" class="form-control form-control-neo" name="seats" value="{{ flight.seats }}" required min="0">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label ms-1 fw-medium">Price per Seat (₹)</label>
+                        <input type="number" class="form-control form-control-neo" name="price" value="{{ flight.price }}" required step="0.01" min="0">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-neo btn-neo-primary w-100 py-2 fs-5">Save Changes</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

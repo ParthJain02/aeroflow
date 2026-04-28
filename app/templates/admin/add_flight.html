@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block title %}Add Flight | Admin{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-4">
+    <div class="col-md-8">
+        <div class="d-flex align-items-center mb-4">
+            <a href="{{ url_for('admin.dashboard') }}" class="btn btn-neo me-3"><i class="bi bi-arrow-left"></i> Back</a>
+            <h2 class="fw-bold mb-0">Add New Flight</h2>
+        </div>
+
+        <div class="container-neo">
+            <form method="POST" action="{{ url_for('admin.add_flight') }}">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label ms-1 fw-medium">Source</label>
+                        <input type="text" class="form-control form-control-neo" name="source" required placeholder="e.g. New York">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label ms-1 fw-medium">Destination</label>
+                        <input type="text" class="form-control form-control-neo" name="destination" required placeholder="e.g. London">
+                    </div>
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label ms-1 fw-medium">Date</label>
+                        <input type="date" class="form-control form-control-neo" name="date" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label ms-1 fw-medium">Time</label>
+                        <input type="time" class="form-control form-control-neo" name="time" required>
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label class="form-label ms-1 fw-medium">Total Seats</label>
+                        <input type="number" class="form-control form-control-neo" name="seats" required min="1">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label ms-1 fw-medium">Price per Seat (₹)</label>
+                        <input type="number" class="form-control form-control-neo" name="price" required step="0.01" min="0">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-neo btn-neo-primary w-100 py-2 fs-5">Add Flight</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

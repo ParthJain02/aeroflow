@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block title %}Login | AeroFlow{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-6 col-lg-5">
+        <div class="container-neo text-center">
+            <h2 class="mb-4 fw-bold">Welcome Back</h2>
+            <form method="POST" action="{{ url_for('auth.login') }}">
+                <div class="mb-4 text-start">
+                    <label for="email" class="form-label fw-medium ms-1">Email address</label>
+                    <input type="email" class="form-control form-control-neo" id="email" name="email" required>
+                </div>
+                <div class="mb-4 text-start">
+                    <label for="password" class="form-label fw-medium ms-1">Password</label>
+                    <input type="password" class="form-control form-control-neo" id="password" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-neo btn-neo-primary w-100 py-2 mt-2">Login</button>
+            </form>
+            
+            <hr class="my-4" style="border-color: rgba(0,0,0,0.1);">
+            
+            <div id="g_id_onload"
+                 data-client_id="{{ config['GOOGLE_CLIENT_ID'] }}"
+                 data-login_uri="{{ url_for('auth.google_auth') }}"
+                 data-auto_prompt="false">
+            </div>
+            <div class="g_id_signin d-flex justify-content-center"
+                 data-type="standard"
+                 data-size="large"
+                 data-theme="outline"
+                 data-text="sign_in_with"
+                 data-shape="rectangular"
+                 data-logo_alignment="left">
+            </div>
+
+            <p class="mt-4 text-muted">
+                Don't have an account? <a href="{{ url_for('auth.register') }}" class="text-primary fw-medium text-decoration-none">Register here</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+{% endblock %}

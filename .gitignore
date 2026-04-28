@@ -1,0 +1,6 @@
+venv/
+__pycache__/
+*.pyc
+fms.db
+.env
+.pytest_cache/

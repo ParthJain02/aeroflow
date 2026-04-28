@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% block title %}Search Flights | AeroFlow{% endblock %}
+
+{% block content %}
+<div class="container-neo mb-5">
+    <h3 class="fw-bold mb-4"><i class="bi bi-search me-2 text-primary"></i> Search Flights</h3>
+    <form method="GET" action="{{ url_for('user.flights') }}" class="row g-3">
+        <div class="col-md-4">
+            <label class="form-label ms-1 fw-medium">From</label>
+            <input type="text" class="form-control form-control-neo" name="source" value="{{ source }}" placeholder="City or Airport">
+        </div>
+        <div class="col-md-4">
+            <label class="form-label ms-1 fw-medium">To</label>
+            <input type="text" class="form-control form-control-neo" name="destination" value="{{ destination }}" placeholder="City or Airport">
+        </div>
+        <div class="col-md-3">
+            <label class="form-label ms-1 fw-medium">Date</label>
+            <input type="date" class="form-control form-control-neo" name="date" value="{{ date }}">
+        </div>
+        <div class="col-md-1 d-flex align-items-end">
+            <button type="submit" class="btn btn-neo btn-neo-primary w-100"><i class="bi bi-search"></i></button>
+        </div>
+    </form>
+</div>
+
+<h4 class="fw-bold mb-4">Available Flights</h4>
+
+{% if flights %}
+    <div class="row">
+        {% for flight in flights %}
+        <div class="col-12">
+            <div class="flight-item">
+                <div class="d-flex align-items-center gap-4">
+                    <div class="text-center">
+                        <div class="text-muted small">Departure</div>
+                        <div class="flight-time">{{ flight.time.strftime('%H:%M') }}</div>
+                        <div class="fw-medium">{{ flight.date.strftime('%b %d, %Y') }}</div>
+                    </div>
+                    
+                    <div class="flight-route mx-4">
+                        <div class="text-center">
+                            <div class="fw-bold fs-5">{{ flight.source }}</div>
+                        </div>
+                        <div class="text-muted d-flex align-items-center">
+                            <span style="height: 2px; width: 40px; background-color: #cbd5e0; display: inline-block;"></span>
+                            <i class="bi bi-airplane-fill mx-2 text-primary"></i>
+                            <span style="height: 2px; width: 40px; background-color: #cbd5e0; display: inline-block;"></span>
+                        </div>
+                        <div class="text-center">
+                            <div class="fw-bold fs-5">{{ flight.destination }}</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="d-flex align-items-center gap-4">
+                    <div class="text-end">
+                        <div class="text-muted small">Available Seats</div>
+                        <div class="fw-bold {% if flight.seats < 10 %}text-danger{% endif %}">{{ flight.seats }}</div>
+                    </div>
+                    <div class="text-end me-3">
+                        <div class="text-muted small">Price per seat</div>
+                        <div class="flight-price">₹{{ "%.2f"|format(flight.price) }}</div>
+                    </div>
+                    <a href="{{ url_for('user.book', flight_id=flight.id) }}" class="btn btn-neo btn-neo-primary px-4">
+                        Book Now
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <!-- Pagination -->
+    <nav class="mt-4" aria-label="Flight pagination">
+        <ul class="pagination justify-content-center">
+            <li class="page-item {% if not pagination.has_prev %}disabled{% endif %}">
+                <a class="page-link form-control-neo border-0 bg-transparent" href="{{ url_for('user.flights', page=pagination.prev_num, source=source, destination=destination, date=date) }}">Previous</a>
+            </li>
+            {% for page_num in pagination.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+                {% if page_num %}
+                    <li class="page-item {% if pagination.page == page_num %}active{% endif %}">
+                        <a class="page-link form-control-neo border-0 {% if pagination.page == page_num %}bg-primary text-white shadow{% else %}bg-transparent text-dark{% endif %}" href="{{ url_for('user.flights', page=page_num, source=source, destination=destination, date=date) }}">{{ page_num }}</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled"><span class="page-link bg-transparent border-0">...</span></li>
+                {% endif %}
+            {% endfor %}
+            <li class="page-item {% if not pagination.has_next %}disabled{% endif %}">
+                <a class="page-link form-control-neo border-0 bg-transparent" href="{{ url_for('user.flights', page=pagination.next_num, source=source, destination=destination, date=date) }}">Next</a>
+            </li>
+        </ul>
+    </nav>
+{% else %}
+    <div class="card-neo text-center py-5">
+        <i class="bi bi-emoji-frown text-muted mb-3" style="font-size: 3rem;"></i>
+        <h5 class="fw-bold">No flights found</h5>
+        <p class="text-muted">Try adjusting your search criteria to find available flights.</p>
+    </div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block title %}My Bookings | AeroFlow{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h3 class="fw-bold"><i class="bi bi-journal-check text-primary me-2"></i> My Bookings</h3>
+    <a href="{{ url_for('user.flights') }}" class="btn btn-neo btn-neo-primary">Book New Flight</a>
+</div>
+
+{% if bookings %}
+    <div class="row">
+        {% for booking in bookings %}
+        <div class="col-md-6 mb-4">
+            <div class="card-neo h-100">
+                <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-3">
+                    <span class="fw-bold fs-5">{{ booking.flight.source }} <i class="bi bi-airplane mx-2 text-primary"></i> {{ booking.flight.destination }}</span>
+                    <span class="badge bg-success bg-opacity-25 text-success border border-success rounded-pill px-3 py-2">Confirmed</span>
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <div class="text-muted small">Date & Time</div>
+                        <div class="fw-medium">{{ booking.flight.date.strftime('%b %d, %Y') }}</div>
+                        <div class="fw-medium">{{ booking.flight.time.strftime('%H:%M') }}</div>
+                    </div>
+                    <div class="col-6 text-end">
+                        <div class="text-muted small">Booking Ref</div>
+                        <div class="fw-bold">#{{ booking.id }}</div>
+                        <div class="text-muted small mt-1">Booked on {{ booking.timestamp.strftime('%b %d') }}</div>
+                    </div>
+                </div>
+                
+                <div class="d-flex justify-content-between align-items-end mt-auto pt-3 border-top">
+                    <div>
+                        <div class="text-muted small">Seats: <span class="fw-bold text-dark">{{ booking.seats_booked }}</span></div>
+                        <div class="text-muted small">Total: <span class="fw-bold text-success">₹{{ "%.2f"|format(booking.total_price) }}</span></div>
+                    </div>
+                    {% if booking.flight.date > current_time %}
+                    <form method="POST" action="{{ url_for('user.cancel_booking', booking_id=booking.id) }}" onsubmit="return confirm('Are you sure you want to cancel this booking? This action cannot be undone.');">
+                        <button type="submit" class="btn btn-neo text-danger border border-danger border-opacity-25 hover-bg-danger">Cancel</button>
+                    </form>
+                    {% else %}
+                    <span class="text-muted small fst-italic">Flight Departed</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="card-neo text-center py-5 mt-4">
+        <i class="bi bi-journal-x text-muted mb-3" style="font-size: 3rem;"></i>
+        <h5 class="fw-bold">No bookings found</h5>
+        <p class="text-muted">You haven't booked any flights yet.</p>
+        <a href="{{ url_for('user.flights') }}" class="btn btn-neo btn-neo-primary mt-2">Find Flights</a>
+    </div>
+{% endif %}
+{% endblock %}

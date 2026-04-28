@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block title %}AeroFlow | Home{% endblock %}
+
+{% block content %}
+<div class="row align-items-center mt-5">
+    <div class="col-lg-6 mb-4 mb-lg-0">
+        <h1 class="display-4 fw-bold mb-4">Experience the <span class="text-gradient">Future</span> of Flight Booking</h1>
+        <p class="lead text-muted mb-5">Seamless, secure, and delightfully simple. Book your next journey with AeroFlow's modern platform.</p>
+        
+        <div class="d-flex gap-3">
+            <a href="{{ url_for('user.flights') }}" class="btn btn-neo btn-neo-primary btn-lg px-4 rounded-pill">
+                <i class="bi bi-search me-2"></i> Find Flights
+            </a>
+            {% if not current_user.is_authenticated %}
+                <a href="{{ url_for('auth.register') }}" class="btn btn-neo btn-lg px-4 rounded-pill">
+                    Join Now
+                </a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="glass-panel text-center p-5">
+            <!-- Simulated widget or image -->
+            <i class="bi bi-airplane-engines text-gradient" style="font-size: 8rem; opacity: 0.8;"></i>
+            <h3 class="mt-4 fw-bold">Ready to take off?</h3>
+            <p class="text-muted">Search through hundreds of destinations.</p>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-5 pt-5 text-center">
+    <div class="col-md-4 mb-4">
+        <div class="card-neo h-100">
+            <i class="bi bi-shield-check text-success mb-3" style="font-size: 3rem;"></i>
+            <h4 class="fw-bold">Secure Booking</h4>
+            <p class="text-muted">Your data and payments are protected with industry-leading security.</p>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card-neo h-100">
+            <i class="bi bi-lightning-charge text-warning mb-3" style="font-size: 3rem;"></i>
+            <h4 class="fw-bold">Instant Confirmation</h4>
+            <p class="text-muted">No waiting. Get your tickets instantly right after booking.</p>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card-neo h-100">
+            <i class="bi bi-headset text-primary mb-3" style="font-size: 3rem;"></i>
+            <h4 class="fw-bold">24/7 Support</h4>
+            <p class="text-muted">Our customer support team is always ready to assist you.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

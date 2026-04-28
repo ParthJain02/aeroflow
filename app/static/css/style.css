@@ -1,0 +1,221 @@
+:root {
+  --bg-color: #e0e5ec;
+  --text-color: #2d3748;
+  --primary-color: #3182ce;
+  --primary-hover: #2b6cb0;
+  
+  /* Hybrid Glass-Neomorphism Shadows */
+  --neo-shadow-light: -8px -8px 16px rgba(255, 255, 255, 0.7),
+                      8px 8px 16px rgba(163, 177, 198, 0.4);
+  --neo-shadow-inset: inset -6px -6px 10px rgba(255, 255, 255, 0.6),
+                      inset 6px 6px 10px rgba(163, 177, 198, 0.3);
+                      
+  --glass-bg: rgba(255, 255, 255, 0.45);
+  --glass-border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: 'Inter', -apple-system, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Background Blobs for Glassmorphism pop */
+.blob {
+  position: fixed;
+  filter: blur(90px);
+  z-index: -1;
+  opacity: 0.5;
+  border-radius: 50%;
+  animation: floatBlob 20s infinite alternate ease-in-out;
+}
+
+.blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: #3182ce; }
+.blob-2 { bottom: -10%; right: -5%; width: 40vw; height: 40vw; background: #805ad5; animation-delay: -5s; }
+.blob-3 { top: 30%; left: 40%; width: 35vw; height: 35vw; background: #38a169; animation-delay: -10s; }
+
+@keyframes floatBlob {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(5%, 10%) scale(1.1); }
+  100% { transform: translate(-5%, 5%) scale(0.9); }
+}
+
+/* Glassmorphism Navbar */
+.navbar-glass {
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: var(--glass-border);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+}
+
+/* Hybrid Glass-Neomorphic Cards */
+.card-neo, .container-neo, .glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: var(--glass-border);
+  border-radius: 20px;
+  box-shadow: var(--neo-shadow-light);
+  padding: 30px;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.card-neo:hover {
+  transform: translateY(-5px);
+  box-shadow: -10px -10px 20px rgba(255, 255, 255, 0.8),
+              10px 10px 20px rgba(163, 177, 198, 0.5);
+}
+
+/* Neomorphic Inputs */
+.form-control-neo {
+  background: rgba(255, 255, 255, 0.3);
+  border: var(--glass-border);
+  border-radius: 12px;
+  box-shadow: var(--neo-shadow-inset);
+  color: var(--text-color);
+  padding: 12px 18px;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+}
+
+.form-control-neo:focus {
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: var(--neo-shadow-inset), 0 0 0 3px rgba(49, 130, 206, 0.3);
+  outline: none;
+  color: var(--text-color);
+}
+
+/* Neomorphic Buttons */
+.btn-neo {
+  background: rgba(255, 255, 255, 0.4);
+  border: var(--glass-border);
+  border-radius: 12px;
+  box-shadow: var(--neo-shadow-light);
+  color: var(--text-color);
+  font-weight: 600;
+  padding: 12px 24px;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.btn-neo:hover {
+  background: rgba(255, 255, 255, 0.6);
+  box-shadow: -4px -4px 8px rgba(255, 255, 255, 0.8),
+              4px 4px 8px rgba(163, 177, 198, 0.4);
+  transform: translateY(-2px);
+}
+
+.btn-neo:active {
+  box-shadow: var(--neo-shadow-inset);
+  transform: translateY(1px);
+}
+
+.btn-neo-primary {
+  background: linear-gradient(135deg, #3182ce, #2b6cb0);
+  color: white;
+  border: none;
+  box-shadow: 4px 4px 10px rgba(49, 130, 206, 0.4),
+             -4px -4px 10px rgba(255, 255, 255, 0.8);
+}
+
+.btn-neo-primary:hover {
+  background: linear-gradient(135deg, #2b6cb0, #2c5282);
+  color: white;
+  box-shadow: 6px 6px 15px rgba(49, 130, 206, 0.5),
+             -6px -6px 15px rgba(255, 255, 255, 0.9);
+}
+
+/* Text styles */
+h1, h2, h3, h4, h5, h6 {
+  color: #1a202c;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, #3182ce, #805ad5, #e53e3e);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 5s linear infinite;
+}
+
+@keyframes shine {
+  to { background-position: 200% center; }
+}
+
+/* Flight Item */
+.flight-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px;
+  margin-bottom: 20px;
+  border-radius: 20px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  border: var(--glass-border);
+  box-shadow: var(--neo-shadow-light);
+  transition: all 0.3s ease;
+}
+
+.flight-item:hover {
+  transform: translateY(-5px) scale(1.01);
+  box-shadow: -10px -10px 20px rgba(255, 255, 255, 0.9),
+              10px 10px 20px rgba(163, 177, 198, 0.5);
+}
+
+.flight-time {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--primary-color);
+}
+
+.flight-route {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.flight-price {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #38a169;
+}
+
+/* Alerts */
+.alert-neo {
+  border-radius: 15px;
+  border: var(--glass-border);
+  box-shadow: var(--neo-shadow-light);
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  font-weight: 500;
+}
+.alert-neo.alert-success { border-left: 6px solid #48bb78; }
+.alert-neo.alert-danger { border-left: 6px solid #f56565; }
+.alert-neo.alert-info { border-left: 6px solid #4299e1; }
+.alert-neo.alert-warning { border-left: 6px solid #ed8936; }
+
+main {
+  flex-grow: 1;
+  position: relative;
+  z-index: 1;
+}
+
+footer {
+  margin-top: auto;
+  padding: 25px 0;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(20px);
+  border-top: var(--glass-border);
+  position: relative;
+  z-index: 1;
+}
+

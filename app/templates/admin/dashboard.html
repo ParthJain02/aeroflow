@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% block title %}Admin Dashboard | AeroFlow{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold"><i class="bi bi-speedometer2 text-primary me-2"></i> Admin Dashboard</h2>
+    <div>
+        <a href="{{ url_for('admin.add_flight') }}" class="btn btn-neo btn-neo-primary me-2"><i class="bi bi-plus-lg me-1"></i> Add Flight</a>
+        <a href="{{ url_for('admin.manage_flights') }}" class="btn btn-neo"><i class="bi bi-airplane text-primary me-1"></i> Manage Flights</a>
+    </div>
+</div>
+
+<div class="row mb-5">
+    <div class="col-md-3 mb-3">
+        <div class="card-neo text-center h-100">
+            <i class="bi bi-airplane-engines text-primary mb-3" style="font-size: 2.5rem;"></i>
+            <h5 class="fw-bold">Total Flights</h5>
+            <h2 class="fw-bold mb-0">{{ total_flights }}</h2>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card-neo text-center h-100">
+            <i class="bi bi-journal-bookmark-fill text-success mb-3" style="font-size: 2.5rem;"></i>
+            <h5 class="fw-bold">Total Bookings</h5>
+            <h2 class="fw-bold mb-0">{{ total_bookings }}</h2>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card-neo text-center h-100">
+            <i class="bi bi-cash-coin text-warning mb-3" style="font-size: 2.5rem;"></i>
+            <h5 class="fw-bold">Total Revenue</h5>
+            <h2 class="fw-bold mb-0">₹{{ "%.2f"|format(revenue) }}</h2>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card-neo text-center h-100">
+            <i class="bi bi-people-fill text-info mb-3" style="font-size: 2.5rem;"></i>
+            <h5 class="fw-bold">Total Users</h5>
+            <h2 class="fw-bold mb-0">{{ total_users }}</h2>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="container-neo">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4 class="fw-bold mb-0">Quick Actions</h4>
+            </div>
+            <div class="row text-center">
+                <div class="col-md-4 mb-3">
+                    <a href="{{ url_for('admin.view_bookings') }}" class="text-decoration-none">
+                        <div class="glass-panel text-dark" style="padding: 20px;">
+                            <i class="bi bi-list-check mb-2 text-primary" style="font-size: 2rem;"></i>
+                            <h6 class="fw-bold">View All Bookings</h6>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <a href="{{ url_for('admin.manage_flights') }}" class="text-decoration-none">
+                        <div class="glass-panel text-dark" style="padding: 20px;">
+                            <i class="bi bi-pencil-square mb-2 text-success" style="font-size: 2rem;"></i>
+                            <h6 class="fw-bold">Edit Flights</h6>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <a href="{{ url_for('admin.add_flight') }}" class="text-decoration-none">
+                        <div class="glass-panel text-dark" style="padding: 20px;">
+                            <i class="bi bi-node-plus mb-2 text-warning" style="font-size: 2rem;"></i>
+                            <h6 class="fw-bold">Add New Route</h6>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

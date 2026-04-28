@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block title %}My Profile | AeroFlow{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-4">
+    <div class="col-md-8 col-lg-6">
+        <div class="d-flex align-items-center mb-4">
+            <h2 class="fw-bold mb-0"><i class="bi bi-person-gear text-primary me-2"></i> Profile Settings</h2>
+        </div>
+
+        <div class="container-neo">
+            <form method="POST" action="{{ url_for('user.profile') }}">
+                <h5 class="fw-bold mb-3">Personal Information</h5>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label ms-1 fw-medium">Full Name</label>
+                        <input type="text" class="form-control form-control-neo" name="name" value="{{ current_user.name }}" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label ms-1 fw-medium">Email Address</label>
+                        <input type="email" class="form-control form-control-neo" name="email" value="{{ current_user.email }}" required>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label ms-1 fw-medium">Gender</label>
+                        <select class="form-control form-control-neo" name="gender">
+                            <option value="">Select...</option>
+                            <option value="Male" {% if current_user.gender == 'Male' %}selected{% endif %}>Male</option>
+                            <option value="Female" {% if current_user.gender == 'Female' %}selected{% endif %}>Female</option>
+                            <option value="Other" {% if current_user.gender == 'Other' %}selected{% endif %}>Other</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label ms-1 fw-medium">Phone Number</label>
+                        <input type="tel" class="form-control form-control-neo" name="phone" value="{{ current_user.phone or '' }}" placeholder="+1234567890">
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label ms-1 fw-medium">Date of Birth</label>
+                        <input type="date" class="form-control form-control-neo" name="dob" value="{{ current_user.dob.strftime('%Y-%m-%d') if current_user.dob else '' }}">
+                    </div>
+                </div>
+                
+                <hr class="my-4" style="border-color: rgba(0,0,0,0.1);">
+                
+                <h5 class="fw-bold mb-3">Change Password <span class="text-muted small fw-normal">(Optional)</span></h5>
+                <div class="mb-3">
+                    <label class="form-label ms-1 fw-medium">Current Password</label>
+                    <input type="password" class="form-control form-control-neo" name="current_password" placeholder="Enter current password to authorize changes">
+                </div>
+                <div class="mb-4">
+                    <label class="form-label ms-1 fw-medium">New Password</label>
+                    <input type="password" class="form-control form-control-neo" name="new_password" placeholder="Enter new password">
+                </div>
+
+                <button type="submit" class="btn btn-neo btn-neo-primary w-100 py-2 fs-5 mt-2">Save Changes</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

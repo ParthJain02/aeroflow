@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block title %}Book Flight | AeroFlow{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-4">
+    <div class="col-md-8">
+        <div class="d-flex align-items-center mb-4">
+            <a href="{{ url_for('user.flights') }}" class="btn btn-neo me-3"><i class="bi bi-arrow-left"></i> Back</a>
+            <h2 class="fw-bold mb-0">Complete Your Booking</h2>
+        </div>
+        
+        <div class="card-neo mb-4">
+            <h4 class="fw-bold mb-4 border-bottom pb-3">Flight Details</h4>
+            <div class="row align-items-center">
+                <div class="col-md-4 text-center border-end">
+                    <div class="text-muted small">Departure</div>
+                    <div class="flight-time text-primary fs-3 fw-bold">{{ flight.time.strftime('%H:%M') }}</div>
+                    <div class="fw-medium">{{ flight.date.strftime('%b %d, %Y') }}</div>
+                </div>
+                <div class="col-md-5 text-center">
+                    <div class="fw-bold fs-4">{{ flight.source }}</div>
+                    <div class="text-muted small my-1">
+                        <i class="bi bi-arrow-down text-primary"></i> to <i class="bi bi-arrow-down text-primary"></i>
+                    </div>
+                    <div class="fw-bold fs-4">{{ flight.destination }}</div>
+                </div>
+                <div class="col-md-3 text-end border-start">
+                    <div class="text-muted small">Price per seat</div>
+                    <div class="fw-bold text-success fs-4">₹{{ "%.2f"|format(flight.price) }}</div>
+                    <div class="text-muted small mt-2">Available: {{ flight.seats }}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-neo">
+            <h4 class="fw-bold mb-4">Passenger Details</h4>
+            <form method="POST" action="{{ url_for('user.book', flight_id=flight.id) }}">
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label class="form-label ms-1 fw-medium">Primary Passenger Name</label>
+                        <input type="text" class="form-control form-control-neo" value="{{ current_user.name }}" readonly>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label ms-1 fw-medium">Email</label>
+                        <input type="email" class="form-control form-control-neo" value="{{ current_user.email }}" readonly>
+                    </div>
+                </div>
+                
+                <div class="row align-items-end mb-4">
+                    <div class="col-md-4">
+                        <label for="seats" class="form-label ms-1 fw-medium">Number of Seats</label>
+                        <select class="form-select form-control-neo" id="seats" name="seats" onchange="updateTotal()">
+                            {% for i in range(1, 11) %}
+                                {% if i <= flight.seats %}
+                                    <option value="{{ i }}">{{ i }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-8 text-end">
+                        <div class="text-muted mb-1">Total Amount</div>
+                        <div class="fs-2 fw-bold text-success" id="totalPrice">₹{{ "%.2f"|format(flight.price) }}</div>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-neo btn-neo-primary w-100 py-3 fs-5">Confirm Booking & Pay</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    const pricePerSeat = {{ flight.price }};
+    function updateTotal() {
+        const seats = document.getElementById('seats').value;
+        const total = (seats * pricePerSeat).toFixed(2);
+        document.getElementById('totalPrice').innerText = '₹' + total;
+    }
+</script>
+{% endblock %}

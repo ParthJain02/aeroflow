@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}Booking Confirmed | AeroFlow{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-6 text-center">
+        <div class="glass-panel">
+            <i class="bi bi-check-circle-fill text-success mb-3" style="font-size: 5rem;"></i>
+            <h2 class="fw-bold mb-3">Booking Confirmed!</h2>
+            <p class="text-muted mb-4">Thank you for booking with AeroFlow. Your ticket details are below.</p>
+            
+            <div class="card-neo text-start mb-4">
+                <div class="d-flex justify-content-between border-bottom pb-2 mb-3">
+                    <span class="text-muted fw-medium">Booking ID</span>
+                    <span class="fw-bold">#{{ booking.id }}</span>
+                </div>
+                <div class="d-flex justify-content-between pb-2 mb-3">
+                    <span class="text-muted fw-medium">Route</span>
+                    <span class="fw-bold">{{ booking.flight.source }} <i class="bi bi-arrow-right mx-1 text-primary"></i> {{ booking.flight.destination }}</span>
+                </div>
+                <div class="d-flex justify-content-between pb-2 mb-3">
+                    <span class="text-muted fw-medium">Date & Time</span>
+                    <span class="fw-bold">{{ booking.flight.date.strftime('%b %d, %Y') }} at {{ booking.flight.time.strftime('%H:%M') }}</span>
+                </div>
+                <div class="d-flex justify-content-between pb-2 mb-3">
+                    <span class="text-muted fw-medium">Seats Booked</span>
+                    <span class="fw-bold">{{ booking.seats_booked }}</span>
+                </div>
+                <div class="d-flex justify-content-between bg-light p-3 rounded" style="background-color: var(--bg-color) !important;">
+                    <span class="text-muted fw-medium fs-5">Total Paid</span>
+                    <span class="fw-bold text-success fs-5">₹{{ "%.2f"|format(booking.total_price) }}</span>
+                </div>
+            </div>
+            
+            <div class="d-flex gap-3 justify-content-center">
+                <a href="{{ url_for('user.my_bookings') }}" class="btn btn-neo">View My Bookings</a>
+                <a href="{{ url_for('user.index') }}" class="btn btn-neo btn-neo-primary">Return Home</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
